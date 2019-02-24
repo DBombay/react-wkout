@@ -3,6 +3,7 @@ import CategoriesCollection from './CategoriesCollection'
 import CreateObjectModal from './CreateObjectModal'
 import Hero from './Hero'
 import HomeNav from './HomeNav'
+import Product from './Product'
 import SubCategory from './SubCategory'
 
 export {
@@ -11,5 +12,6 @@ export {
   CreateObjectModal,
   Hero,
   HomeNav,
+  Product,
   SubCategory
 }

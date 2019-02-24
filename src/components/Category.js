@@ -20,8 +20,13 @@ export default class Category extends React.Component {
       .then(data => {
         let subCategories = data.map((subCategory) => {
           return (
-            <SubCategory id={subCategory.id} key={subCategory.id} name={subCategory.name}
-                         description={subCategory.description}/>
+            <SubCategory
+              id={subCategory.id}
+              key={subCategory.id}
+              name={subCategory.name}
+              description={subCategory.description}
+              category_id={this.props.id}
+            />
           )
         })
         this.setState({subCategories: subCategories})
