@@ -1,37 +1,17 @@
 import React from 'react'
-import {SubCategory} from '../components'
 import {Card, CardBody, Collapse} from 'reactstrap'
 
-export default class Category extends React.Component {
+export default class SubCategory extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      subCategories: []
+      products: []
     }
   }
 
-  componentDidMount() {
-    fetch(`http://localhost:5000/categories/${this.props.id}/sub_categories`)
-      .then(results => {
-        return results.json();
-      })
-      .then(data => {
-        let subCategories = data.map((subCategory) => {
-          return (
-            <SubCategory id={subCategory.id} key={subCategory.id} name={subCategory.name}
-                         description={subCategory.description}/>
-          )
-        })
-        this.setState({subCategories: subCategories})
-      })
-      .catch(e => {
-          console.log(e);
-          return e
-        }
-      )
-  }
+  // fetch(`http://localhost:5000/categories/${this.props.category_id}/sub_categories/${this.props.id}/products`)
 
   toggle() {
     this.setState({menuOpen: !this.state.menuOpen})
@@ -51,7 +31,7 @@ export default class Category extends React.Component {
         <Collapse isOpen={this.state.menuOpen}>
           <hr className="my-2"/>
           <CardBody>
-            {this.state.subCategories}
+            Products will go here
           </CardBody>
         </Collapse>
       </Card>
