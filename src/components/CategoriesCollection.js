@@ -11,7 +11,7 @@ export default class CategoriesCollection extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/categories')
+    fetch("http://localhost:5000/categories/")
       .then(results => {
         return results.json();
       })
@@ -22,6 +22,10 @@ export default class CategoriesCollection extends React.Component {
           )
         })
         this.setState({categories: categories})
+      })
+      .catch(e =>{
+        console.log(e);
+        return e
       })
   }
 

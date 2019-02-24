@@ -12,7 +12,7 @@ export default class Category extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/subcategories')
+    fetch(`http://localhost:5000/categories/${this.props.id}/sub_categories`)
       .then(results => {
         return results.json();
       })
