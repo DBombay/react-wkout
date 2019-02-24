@@ -19,7 +19,7 @@ export default class SubCategory extends React.Component {
 
   render() {
     return (
-      <Card key={this.props.id} className='container-fluid h-100 bg-light'>
+      <Card key={this.props.id} className='container-fluid h-100 bg-light my-2'>
         <CardBody className="row h-100 align-items-center" onClick={this.toggle}>
           <h2 className="col-7 float-left">{this.props.name}</h2>
           <div className="col-5 float-right">
