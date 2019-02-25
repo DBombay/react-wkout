@@ -17,15 +17,15 @@ export default function Product(props) {
         <img src={props.image} alt={`A picture of a ${props.name}`} className='img-thumbnail w-100'/>
 
         <div className="row">
-          <strong>Price:</strong>
-          <p>${props.price}</p>
+          <strong className="col-6 float-left">Price:</strong>
+          <p className="col-6 float-right text-right">${props.price}</p>
         </div>
 
         <p>{props.description}</p>
         <ButtonGroup>
           <Button color="primary">Edit</Button>
-          <Button color="warning">De-Activate</Button>
-          <Button color="danger">Delete</Button>
+          {props.active && <Button color="warning">De-Activate</Button>}
+          <Button color="danger" onClick={()=> {props.onClickDelete(props.id)}}>Delete</Button>
         </ButtonGroup>
       </CardBody>
     </Card>

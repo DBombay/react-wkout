@@ -1,19 +1,22 @@
 import React from 'react'
 import {Product} from '../components'
-import {Card, CardBody, Collapse} from 'reactstrap'
+import {Card, CardBody, Collapse, Spinner} from 'reactstrap'
 
 export default class SubCategory extends React.Component {
   constructor(props) {
     super(props);
+    this.deleteProduct = this.deleteProduct.bind(this);
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
+      loading: false,
       products: []
     }
   }
 
   componentDidMount() {
-    fetch(`http://localhost:5000/categories/${this.props.category_id}/sub_categories/${this.props.id}/products`)
+    this.setState({loading: true})
+    fetch(`/categories/${this.props.category_id}/sub_categories/${this.props.id}/products`)
       .then(
         results => {
           return results.json();
@@ -32,16 +35,35 @@ export default class SubCategory extends React.Component {
                 description={product.description}
                 image={product.product_image}
                 onSale={product.on_sale}
+                active={product.active}
+                onClickDelete={this.deleteProduct}
               />
             )
           }
-      })
-        this.setState({products: products})
+        })
+        this.setState({products: products, loading: false})
       })
       .catch(e => {
         console.log(e)
         return e
       })
+  }
+
+  deleteProduct(id) {
+    this.setState({loading: true})
+    fetch(`/categories/${this.props.category_id}/sub_categories/${this.props.id}/products/${id}`, {
+      method: "DELETE"
+    })
+      .then(response => {
+        this.setState({loading: false})
+        return response
+      })
+      .catch(e => {
+        this.setState({loading: false})
+        console.log(e);
+        return e
+      })
+
   }
 
   toggle() {
@@ -63,7 +85,7 @@ export default class SubCategory extends React.Component {
           <hr className="my-2"/>
           <CardBody>
             <div className="row align-items-center justify-content-start">
-              {this.state.products}
+              {this.state.loading ? <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" /> : this.state.products}
             </div>
           </CardBody>
         </Collapse>

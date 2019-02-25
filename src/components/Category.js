@@ -1,6 +1,6 @@
 import React from 'react'
 import {SubCategory} from '../components'
-import {Card, CardBody, Collapse} from 'reactstrap'
+import {Card, CardBody, Collapse, Spinner} from 'reactstrap'
 
 export default class Category extends React.Component {
   constructor(props) {
@@ -8,12 +8,14 @@ export default class Category extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
+      loading: false,
       subCategories: []
     }
   }
 
   componentDidMount() {
-    fetch(`http://localhost:5000/categories/${this.props.id}/sub_categories`)
+    this.setState({loading: true});
+    fetch(`/categories/${this.props.id}/sub_categories`)
       .then(results => {
         return results.json();
       })
@@ -29,7 +31,7 @@ export default class Category extends React.Component {
             />
           )
         })
-        this.setState({subCategories: subCategories})
+        this.setState({subCategories: subCategories, loading: false})
       })
       .catch(e => {
           console.log(e);
@@ -56,7 +58,7 @@ export default class Category extends React.Component {
         <Collapse isOpen={this.state.menuOpen}>
           <hr className="my-2"/>
           <CardBody>
-            {this.state.subCategories}
+            {this.state.loading ? <Spinner style={{ width: '3rem', height: '3rem' }} /> : this.state.subCategories}
           </CardBody>
         </Collapse>
       </Card>

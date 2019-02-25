@@ -1,4 +1,5 @@
 import React from 'react'
+import {Spinner} from 'reactstrap'
 import {Category} from '../components'
 
 export default class CategoriesCollection extends React.Component {
@@ -6,12 +7,14 @@ export default class CategoriesCollection extends React.Component {
     super(props);
 
     this.state = {
-      categories: []
+      categories: [],
+      loading: false
     }
   }
 
   componentDidMount() {
-    fetch("http://localhost:5000/categories/")
+    this.setState({loading: true});
+    fetch("categories/")
       .then(results => {
         return results.json();
       })
@@ -21,7 +24,7 @@ export default class CategoriesCollection extends React.Component {
             <Category id={category.id} key={category.id} name={category.name} description={category.description}/>
           )
         })
-        this.setState({categories: categories})
+        this.setState({categories: categories, loading: false})
       })
       .catch(e =>{
         console.log(e);
@@ -32,7 +35,7 @@ export default class CategoriesCollection extends React.Component {
   render() {
     return (
       <div className='container'>
-        {this.state.categories}
+        {this.state.loading ? <Spinner style={{ width: '3rem', height: '3rem' }} /> : this.state.categories}
       </div>
     )
   }
