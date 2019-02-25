@@ -14,6 +14,13 @@ export default class Category extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchSubCategories()
+  }
+
+  componentDidUpdate() {
+  }
+
+  fetchSubCategories() {
     this.setState({loading: true});
     fetch(`/categories/${this.props.id}/sub_categories`)
       .then(results => {
@@ -27,7 +34,7 @@ export default class Category extends React.Component {
               key={subCategory.id}
               name={subCategory.name}
               description={subCategory.description}
-              category_id={this.props.id}
+              category_id={subCategory.category_id}
             />
           )
         })
@@ -58,7 +65,7 @@ export default class Category extends React.Component {
         <Collapse isOpen={this.state.menuOpen}>
           <hr className="my-2"/>
           <CardBody>
-            {this.state.loading ? <Spinner style={{ width: '3rem', height: '3rem' }} /> : this.state.subCategories}
+            {this.state.loading ? <Spinner style={{width: '3rem', height: '3rem'}}/> : this.state.subCategories}
           </CardBody>
         </Collapse>
       </Card>
