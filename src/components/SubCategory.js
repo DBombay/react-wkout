@@ -20,16 +20,22 @@ export default class SubCategory extends React.Component {
         }
       )
       .then(data => {
-        let products = data.map((subCategory) => {
-          return (
-            <Product
-              id={subCategory.id}
-              key={subCategory.id}
-              name={subCategory.name}
-              description={subCategory.description}
-            />
-          )
-        })
+        let products = data.map((product) => {
+          if (product.active) {
+            return (
+              <Product
+                id={product.id}
+                key={product.id}
+                name={product.name}
+                price={product.price}
+                salePrice={product.sale_price}
+                description={product.description}
+                image={product.product_image}
+                onSale={product.on_sale}
+              />
+            )
+          }
+      })
         this.setState({products: products})
       })
       .catch(e => {
@@ -56,7 +62,9 @@ export default class SubCategory extends React.Component {
         <Collapse isOpen={this.state.menuOpen}>
           <hr className="my-2"/>
           <CardBody>
-            {this.state.products}
+            <div className="row align-items-center justify-content-start">
+              {this.state.products}
+            </div>
           </CardBody>
         </Collapse>
       </Card>
