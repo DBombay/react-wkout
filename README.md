@@ -1,6 +1,6 @@
 Workout Store React Client
 ===
-The React Front End client to be used with the Rails Workout store server.
+The React Front End client to be used with the Rails Workout store server. _Still a work in progress_
 
 Installation and Setup
 ---
@@ -22,3 +22,10 @@ Installation and Setup
     yarn start
     ```
 5. Go to http://localhost:3000
+
+TODO
+---
+Now that CORS is satisfied:
+ - Finish DELETE for Category and SubCategory
+ - Add EDIT for Category, SubCategory, and Product
+ - Create for Category, SubCategory, and Product
