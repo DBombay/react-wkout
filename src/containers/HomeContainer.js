@@ -10,6 +10,7 @@ export default class HomeContainer extends React.Component {
     return(
       <div className="container">
         <Hero />
+        <CreateObjectModal/>
         <CategoriesCollection />
       </div>
     )

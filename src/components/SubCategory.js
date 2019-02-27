@@ -16,7 +16,35 @@ export default class SubCategory extends React.Component {
 
   componentDidMount() {
     this.setState({loading: true})
-    fetch(`/categories/${this.props.category_id}/sub_categories/${this.props.id}/products`)
+    this.fetchProducts(this.props.id)
+  }
+
+  componentWillReceiveProps(props) {
+    const { refresh, id } = this.props;
+    if (props.refresh !== refresh) {
+      this.fetchProducts(id)
+    }
+  }
+
+  deleteProduct(id) {
+    this.setState({loading: true})
+    fetch(`/categories/${this.props.category_id}/sub_categories/${this.props.id}/products/${id}`, {
+      method: "DELETE"
+    })
+      .then(response => {
+        this.setState({loading: false})
+        return response
+      })
+      .catch(e => {
+        this.setState({loading: false})
+        console.log(e);
+        return e
+      })
+
+  }
+
+  fetchProducts(id) {
+    fetch(`/categories/${this.props.category_id}/sub_categories/${id}/products`)
       .then(
         results => {
           return results.json();
@@ -47,23 +75,6 @@ export default class SubCategory extends React.Component {
         console.log(e)
         return e
       })
-  }
-
-  deleteProduct(id) {
-    this.setState({loading: true})
-    fetch(`/categories/${this.props.category_id}/sub_categories/${this.props.id}/products/${id}`, {
-      method: "DELETE"
-    })
-      .then(response => {
-        this.setState({loading: false})
-        return response
-      })
-      .catch(e => {
-        this.setState({loading: false})
-        console.log(e);
-        return e
-      })
-
   }
 
   toggle() {
